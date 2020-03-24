@@ -6,7 +6,8 @@ const app = express()
 
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({ extended: true }))
-app.set('view engine','ejs')
+app.set('view engine','ejs');
+app.use(express.static('./views'));
 
 app.get('/', (req, res) => {
     res.render('index')
@@ -14,7 +15,7 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
     var text = req.body.text
-    const speech = new gtts(text, 'fr')
+    const speech = new gtts(text, 'fr') //CHANGER LA LANGUE ICI
     speech.save("output.mp3")
         .then(function () {
           res.download("output.mp3")
